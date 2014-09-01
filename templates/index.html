@@ -1,0 +1,22 @@
+<head> 
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> 
+
+<meta name="viewport" content="width=7168, height=3072, initial-scale=1">
+</head> 
+
+    <body> 
+
+
+<script> 
+$.get("http://10.1.1.60:9191/location",
+        function(d, txtstatus, jqxhdr) {
+            var x = d.split(",")[0]
+            var y = d.split(",")[1]
+            console.log("This window should scroll to ",x,y) 
+            window.scrollTo(x,y) 
+        }
+) 
+
+</script> 
+<iframe src="http://middle-earth.thehobbit.com/map" width="7168px" height="3072px"></iframe>
+</body> 
