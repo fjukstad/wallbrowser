@@ -11,11 +11,14 @@ import (
 	"strconv"
 	"strings"
 	"text/template"
+
+	"github.com/fjukstad/gowebsocket"
 )
 
 var config map[string]string
 
 var indexTemplate = template.Must(template.ParseFiles("templates/index.html"))
+var controllerTemplate = template.Must(template.ParseFiles("templates/controller.html"))
 
 func renderTemplate(t *template.Template, w http.ResponseWriter, d interface{}) {
 
@@ -33,8 +36,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(indexTemplate, w, nil)
 }
 
-func PageHandler(w http.ResponseWriter, r *http.Request) {
-
+func ControllerHandler(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(controllerTemplate, w, nil)
 }
 
 // Get x,y for hostname
@@ -70,10 +73,11 @@ func LocationHandler(w http.ResponseWriter, r *http.Request) {
 
 	hostname := config[ip]
 	if hostname == "" {
+		hostname = "tile-0-2"
 		log.Println(ip, "is not a part of the display wall!")
 		//fmt.Fprintf(w, "You're not a part of the display wall!")
-		fmt.Fprintf(w, "200,300")
-		return
+		//fmt.Fprintf(w, "200,300")
+		//return
 	}
 	x, y := wallcoordinates(hostname)
 
@@ -110,15 +114,21 @@ func ReadConfig(filename string) map[string]string {
 	return config
 
 }
-
 func main() {
 
 	// read config
 	config = ReadConfig("config.csv")
 
+	// set up websocket hub for messages etc
+	ip := "10.1.1.60"
+	wsport := ":9192"
+	server := gowebsocket.New(ip, wsport)
+	server.Start()
+
+	// http handlers
 	http.HandleFunc("/", IndexHandler)
-	http.HandleFunc("/page", PageHandler)
 	http.HandleFunc("/location", LocationHandler)
+	http.HandleFunc("/controller", ControllerHandler)
 
 	port := ":9191"
 

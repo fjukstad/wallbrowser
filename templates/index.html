@@ -1,22 +1,103 @@
 <head> 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> 
-
-<meta name="viewport" content="width=7168, height=3072, initial-scale=1">
+    <meta name="viewport" content="width=7168, height=3072, initial-scale=1">
 </head> 
-
-    <body> 
-
+<style>
+    body {
+        width: 7168px;
+        height: 3072px;
+    }
+</style>
+<body> 
 
 <script> 
+
+$("#ifr").focus()
+
+e = jQuery.Event("keydown"); 
+
+var ws = new WebSocket("ws://10.1.1.60:9192") 
+ws.onmessage = function(event) {
+
+    //$("#ifr").focus() 
+    
+    console.log("Message from server:", event.data)
+    switch (parseInt(event.data)) {
+    case 37:
+        console.log('left arrow key pressed!');
+        break;
+    case 38:
+        console.log('up arrow key pressed!');
+        break;
+    case 39:
+        console.log('right arrow key pressed!');
+        break;
+    case 40:
+        console.log('down arrow key pressed!');
+        break;
+    case 82: 
+        console.log('r key pressed!');
+        break 
+    }
+
+    e.which = parseInt(event.data)
+    e.view = window
+    e.keyCode = parseInt(event.data) 
+    console.log(e) 
+    $("#divvy").trigger(e) 
+
+
+
+} 
+
+$(document.body).on('keydown', function(event) {
+        console.log("KEYDOWN!!!!",event);
+        console.log(window.scrollX, window.scrollY)
+        if (window.scrollX < x
+           || window.scrollY < y) {
+            window.scrollTo(x,y)
+            event.preventDefault() 
+        }
+});
+
+var x; 
+var y;
+
+
 $.get("http://10.1.1.60:9191/location",
         function(d, txtstatus, jqxhdr) {
-            var x = d.split(",")[0]
-            var y = d.split(",")[1]
+            x = parseInt(d.split(",")[0])
+            y=  parseInt(d.split(",")[1])
             console.log("This window should scroll to ",x,y) 
             window.scrollTo(x,y) 
         }
 ) 
 
 </script> 
-<iframe src="http://middle-earth.thehobbit.com/map" width="7168px" height="3072px" frameBorder="0"></iframe>
+<!---iframe src="http://middle-earth.thehobbit.com/map" width="7168px"
+    height="3072px" frameBorder="0"></iframe>-->
+
+<!--<iframe src="http://www.barentswatch.no/Kart/Fiskeri-og-havbruk/Lokalitet-havbruk/" width="7168px"
+    height="3072px" frameBorder="0"></iframe>-->
+
+<!--<iframe src="http://go-talks.appspot.com/github.com/uit-inf-3200/Colloquiums/inf-3200-go-programming-language/inf-3200-go-programming-language.slide#1" width="7168px"
+    height="3072px" frameBorder=0 id="ifr" ></iframe>-->
+
+<!--
+<iframe
+src="http://tromso.maps.arcgis.com/home/webmap/viewer.html?webmap=8ae42763033a4259ab820a3acc4901c1" width="7168px"
+    height="3072px" frameBorder="0"></iframe>
+-->
+
+<!-- BABY MONKEY
+<iframe src="https://www.youtube.com/embed/5_sfnQDr1-o?hd=1?&autoplay=1" width="7168px"
+    height="3072px" frameBorder="0"></iframe>
+--> 
+
+<!-- no autoplay baby monkey
+<iframe src="https://www.youtube.com/embed/5_sfnQDr1-o?hd=1?"  width="7168px"
+    height="3072px" frameBorder="0"></iframe>
+    -->
+<iframe src="https://nrk.no" width="7168px"
+    height="3072px" frameBorder="0"></iframe>
 </body> 
