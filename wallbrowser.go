@@ -74,9 +74,8 @@ func LocationHandler(w http.ResponseWriter, r *http.Request) {
 	hostname := config[ip]
 	if hostname == "" {
 		hostname = "tile-0-2"
-		log.Println(ip, "is not a part of the display wall!")
-		//fmt.Fprintf(w, "You're not a part of the display wall!")
-		//fmt.Fprintf(w, "200,300")
+		log.Println(ip, "is not a part of the display wall, we set you to",
+			hostname)
 		//return
 	}
 	x, y := wallcoordinates(hostname)
@@ -120,7 +119,7 @@ func main() {
 	config = ReadConfig("config.csv")
 
 	// set up websocket hub for messages etc
-	ip := "10.1.1.60"
+	ip := "localhost"
 	wsport := ":9192"
 	server := gowebsocket.New(ip, wsport)
 	server.Start()

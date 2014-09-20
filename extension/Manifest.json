@@ -1,0 +1,16 @@
+{
+    "name": "wallbrowser",
+    "version": "0.1",
+    "content_scripts": [
+    {
+        "matches": [
+            "http://*/*",
+            "https://*/*"
+        ],
+        "css": ["style.css"],
+        "js": ["jquery.js", "wallbrowser.js"],
+        "run_at": "document_end" 
+    }
+  ],
+    "manifest_version": 2
+}
