@@ -1,26 +1,26 @@
-<head> 
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> 
+<head>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <meta name="viewport" content="width=7168, height=3072, initial-scale=1">
-</head> 
+</head>
 <style>
     body {
         width: 7168px;
         height: 3072px;
     }
 </style>
-<body> 
+<body>
 
-<script> 
+<script>
 
 $("#ifr").focus()
 
-e = jQuery.Event("keydown"); 
+e = jQuery.Event("keydown");
 
-var ws = new WebSocket("ws://10.1.1.60:9192") 
+var ws = new WebSocket("ws://10.1.1.60:9192")
 ws.onmessage = function(event) {
 
-    //$("#ifr").focus() 
-    
+    //$("#ifr").focus()
+
     console.log("Message from server:", event.data)
     switch (parseInt(event.data)) {
     case 37:
@@ -35,20 +35,20 @@ ws.onmessage = function(event) {
     case 40:
         console.log('down arrow key pressed!');
         break;
-    case 82: 
+    case 82:
         console.log('r key pressed!');
-        break 
+        break
     }
 
     e.which = parseInt(event.data)
     e.view = window
-    e.keyCode = parseInt(event.data) 
-    console.log(e) 
-    $("#divvy").trigger(e) 
+    e.keyCode = parseInt(event.data)
+    console.log(e)
+    $("#divvy").trigger(e)
 
 
 
-} 
+}
 
 $(document.body).on('keydown', function(event) {
         console.log("KEYDOWN!!!!",event);
@@ -56,11 +56,11 @@ $(document.body).on('keydown', function(event) {
         if (window.scrollX < x
            || window.scrollY < y) {
             window.scrollTo(x,y)
-            event.preventDefault() 
+            event.preventDefault()
         }
 });
 
-var x; 
+var x;
 var y;
 
 
@@ -68,12 +68,12 @@ $.get("http://10.1.1.60:9191/location",
         function(d, txtstatus, jqxhdr) {
             x = parseInt(d.split(",")[0])
             y=  parseInt(d.split(",")[1])
-            console.log("This window should scroll to ",x,y) 
-            window.scrollTo(x,y) 
+            console.log("This window should scroll to ",x,y)
+            window.scrollTo(x,y)
         }
-) 
+)
 
-</script> 
+</script>
 <!---iframe src="http://middle-earth.thehobbit.com/map" width="7168px"
     height="3072px" frameBorder="0"></iframe>-->
 
@@ -92,7 +92,7 @@ src="http://tromso.maps.arcgis.com/home/webmap/viewer.html?webmap=8ae42763033a42
 <!-- BABY MONKEY
 <iframe src="https://www.youtube.com/embed/5_sfnQDr1-o?hd=1?&autoplay=1" width="7168px"
     height="3072px" frameBorder="0"></iframe>
---> 
+-->
 
 <!-- no autoplay baby monkey
 <iframe src="https://www.youtube.com/embed/5_sfnQDr1-o?hd=1?"  width="7168px"
@@ -100,4 +100,4 @@ src="http://tromso.maps.arcgis.com/home/webmap/viewer.html?webmap=8ae42763033a42
     -->
 <iframe src="https://nrk.no" width="7168px"
     height="3072px" frameBorder="0"></iframe>
-</body> 
+</body>
