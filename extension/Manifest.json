@@ -9,7 +9,8 @@
         ],
         "css": ["style.css"],
         "js": ["jquery.js", "wallbrowser.js"],
-        "run_at": "document_end" 
+        "run_at": "document_end",
+        "all_frames":true
     }
   ],
     "manifest_version": 2

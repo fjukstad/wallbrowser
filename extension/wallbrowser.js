@@ -1,23 +1,40 @@
 console.log("HELLO")
+
+window.innerWidth = 7168;
+window.innerHeight = 3072;
 document.body.style.width = '7168px';
 document.body.style.height = '3072px';
 
 var x; 
 var y;
 
-$.get("http://localhost:9191/location",
+$.get("http://10.1.1.60:9191/location",
         function(d, txtstatus, jqxhdr) {
             x = parseInt(d.split(",")[0])
             y=  parseInt(d.split(",")[1])
-            console.log("This window should scroll to ",x,y) 
+            console.log("This window should scroll to "+x+","+y) 
             window.scrollTo(x,y) 
+            setTimeout(function(){
+                r()
+            }, 1000);
         }
 ) 
+
+function r() {
+    window.innerWidth = 7168;
+    window.innerHeight = 3072;
+
+    document.body.style.width = '7168px';
+    document.body.style.height = '3072px';
+        
+    window.scrollTo(x,y);
+    setTimeout(r,1000)
+}
 
 // e = jQuery.Event("keydown"); 
 
 
-var ws = new WebSocket("ws://localhost:9192") 
+var ws = new WebSocket("ws://10.1.1.60:9192") 
 ws.onmessage = function(event) {
 
     //$("#ifr").focus() 
